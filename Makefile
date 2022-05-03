@@ -45,7 +45,7 @@ dockerise: build-voter build-ballot build-ecserver build-ec build-test
 .PHONY: build-ballot
 build-ballot:
 ifdef DOCKER_HOST
-	docker build -H ${DOCKER_HOST} -t ${BALLOT_IMG}:${IMAGE_TAG} -f ballot/Dockerfile ballot
+	docker -H ${DOCKER_HOST} build -t ${BALLOT_IMG}:${IMAGE_TAG} -f ballot/Dockerfile ballot
 else
 	docker build -t ${BALLOT_IMG}:${IMAGE_TAG} -f ballot/Dockerfile ballot
 endif
@@ -53,7 +53,7 @@ endif
 .PHONY: build-voter
 build-voter:
 ifdef DOCKER_HOST
-	docker build -H ${DOCKER_HOST} -t ${VOTER_IMG}:${IMAGE_TAG} -f voter/Dockerfile voter
+	docker -H ${DOCKER_HOST} build -t ${VOTER_IMG}:${IMAGE_TAG} -f voter/Dockerfile voter
 else
 	docker build -t ${VOTER_IMG}:${IMAGE_TAG} -f voter/Dockerfile voter	
 endif
@@ -61,7 +61,7 @@ endif
 .PHONY: build-ecserver
 build-ecserver:
 ifdef DOCKER_HOST
-	docker build -H ${DOCKER_HOST} -t ${ECSVR_IMG}:${IMAGE_TAG} -f ecserver/Dockerfile ecserver
+	docker -H ${DOCKER_HOST} build -t ${ECSVR_IMG}:${IMAGE_TAG} -f ecserver/Dockerfile ecserver
 else
 	docker build -t ${ECSVR_IMG}:${IMAGE_TAG} -f ecserver/Dockerfile ecserver
 endif
@@ -69,7 +69,7 @@ endif
 .PHONY: build-test
 build-test:
 ifdef DOCKER_HOST
-	docker build -H ${DOCKER_HOST} -t ${TEST_IMG}:${IMAGE_TAG} -f service-test-suite/Dockerfile service-test-suite
+	docker -H ${DOCKER_HOST} build -t ${TEST_IMG}:${IMAGE_TAG} -f service-test-suite/Dockerfile service-test-suite
 else
 	docker build -t ${TEST_IMG}:${IMAGE_TAG} -f service-test-suite/Dockerfile service-test-suite
 endif
@@ -77,7 +77,7 @@ endif
 .PHONY: build-ec
 build-ec:
 ifdef DOCKER_HOST
-	docker build -H ${DOCKER_HOST} -t ${EC_IMG}:${IMAGE_TAG} -f election-commission/Dockerfile election-commission
+	docker -H ${DOCKER_HOST} build -t ${EC_IMG}:${IMAGE_TAG} -f election-commission/Dockerfile election-commission
 else
 	docker build -t ${EC_IMG}:${IMAGE_TAG} -f election-commission/Dockerfile election-commission
 endif
@@ -112,6 +112,10 @@ ifeq ($(strip $(CLUSTER_IP)),)
 endif
 		helm install vote helm-vote --set clusterIP=$(CLUSTER_IP)
 		
+.PHONY: generate
+generate:
+	helm template helm-vote --output-dir generated-files
+
 .PHONY: helm-undeploy
 helm-undeploy:
 		-helm uninstall vote
@@ -123,3 +127,5 @@ clean: helm-undeploy
 	-kubectl delete -f ballot/ballot.yaml
 	-kubectl delete -f ecserver/ecserver.yaml
 	-kubectl delete -f election-commission/ec.yaml
+	-kubectl delete -f generated-files
+	-rm -rf generated-files 

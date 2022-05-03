@@ -1,3 +1,4 @@
+apiversion: v1
 config:
   target: "http://default.ballot.10.10.0.10.nip.io"
   http:
@@ -45,7 +46,7 @@ scenarios:
           name: postRequest
           json: 
             vote: ${random.int}
-            candidate_id: "{{option}}"
+            candidate_id: "{{ .Values.ballot_option }}"
           expect:
             - statusCode: 200
 

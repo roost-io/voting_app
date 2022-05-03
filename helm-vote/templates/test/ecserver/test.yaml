@@ -1,3 +1,4 @@
+apiversion: v1
 config:
   target: "http://default.ecserver.10.10.0.10.nip.io"
   http:
@@ -45,8 +46,8 @@ scenarios:
           url: "/"
           name: postRequest
           json: 
-            Name: "{{name}}"
-            ImageUrl: "{{image_url}}"
+            Name: "{{.Values.ecserver_name}}"
+            ImageUrl: "{{.Values.ecserver_image_url}}"
           expect:
             - statusCode: 200
             - contentType: json
@@ -57,7 +58,7 @@ scenarios:
           url: "/"
           name: deleteRequest
           json: 
-            Name: "{{name}}"
+            Name: "{{.Values.ecserver_name}}"
           expect:
             - statusCode:
               - 200
