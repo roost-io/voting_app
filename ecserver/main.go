@@ -20,10 +20,10 @@ var (
 			Name:     "Docker",
 			ImageUrl: "https://logos-world.net/wp-content/uploads/2021/02/Docker-Logo.png",
 		},
-// 		{
-// 			Name:     "MiniKube",
-// 			ImageUrl: "https://miro.medium.com/max/400/0*KzqL3xqmXzV5PPjX.png",
-// 		},
+ 		{
+ 			Name:     "MiniKube",
+ 			ImageUrl: "https://miro.medium.com/max/400/0*KzqL3xqmXzV5PPjX.png",
+ 		},
 // 		{
 // 		 	Name:     "K3D",
 // 			ImageUrl: "https://www.suse.com/c/wp-content/uploads/2021/02/K3D-Blog-Graphic-20210209.png",

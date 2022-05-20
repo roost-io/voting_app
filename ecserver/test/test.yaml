@@ -18,6 +18,13 @@ config:
     - duration: 5
       arrivalRate: 5
       name: Warm up
+    - duration: 10
+      arrivalRate: 7
+      rampTo : 30
+      name: Limited ramp up load
+    - duration: 20
+      arrivalRate: 10
+      name: Sustained Load
   payload:
     path: "options.csv"
     fields:
