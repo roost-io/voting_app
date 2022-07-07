@@ -1,18 +1,18 @@
 apiVersion: v1
 kind: Service
-metadata: 
-  labels: 
+metadata:
+  labels:
     apps: ecserver
   name: ecserver
-spec: 
+spec:
   type: NodePort
-  selector: 
+  selector:
     app: ecserver
   ports:
-  - name: ecserver
-    port: 8081
-    targetPort: 8081
-    nodePort: 30081
+    - name: ecserver
+      port: 8081
+      targetPort: 8081
+      nodePort: 30081
 
 ---
 apiVersion: apps/v1
@@ -30,26 +30,26 @@ spec:
         app: ecserver
     spec:
       containers:
-      - name: ecserver
-        image: zbio/ecserver:latest
-        ports:
-        - containerPort: 8081
+        - name: ecserver
+          image: zbio/ecserver:latest
+          ports:
+            - containerPort: 8081
 ---
 apiVersion: v1
 kind: Service
-metadata: 
-  labels: 
+metadata:
+  labels:
     apps: ballot
   name: ballot
-spec: 
+spec:
   type: NodePort
-  selector: 
+  selector:
     app: ballot
   ports:
-  - name: ballot
-    port: 8080
-    targetPort: 8080
-    nodePort: 30080
+    - name: ballot
+      port: 8080
+      targetPort: 8080
+      nodePort: 30080
 
 ---
 apiVersion: apps/v1
@@ -67,28 +67,28 @@ spec:
         app: ballot
     spec:
       containers:
-      - name: ballot
-        image: zbio/ballot:latest
-        ports:
-        - containerPort: 8080
+        - name: ballot
+          image: zbio/ballot:latest
+          ports:
+            - containerPort: 8080
 ---
 apiVersion: v1
 kind: Service
-metadata: 
-  labels: 
+metadata:
+  labels:
     apps: voter
     type: "roost-example"
   name: voter
-spec: 
+spec:
   type: NodePort
-  selector: 
+  selector:
     app: voter
     type: "roost-example"
   ports:
-  - name: voter
-    port: 80
-    targetPort: 80
-    nodePort: 30030
+    - name: voter
+      port: 80
+      targetPort: 80
+      nodePort: 30030
 
 ---
 apiVersion: apps/v1
@@ -108,33 +108,33 @@ spec:
         type: "roost-example"
     spec:
       containers:
-      - name: voter
-        image: zbio/voter:latest
-        stdin: true
-        tty: true
-        env:
-        - name: REACT_APP_BALLOT_ENDPOINT
-          value: roost-controlplane:30080
-        - name: REACT_APP_EC_SERVER_ENDPOINT
-          value: roost-controlplane:30081
-        ports:
-        - containerPort: 80
+        - name: voter
+          image: zbio/voter:latest
+          stdin: true
+          tty: true
+          env:
+            - name: REACT_APP_BALLOT_ENDPOINT
+              value: roost-controlplane:30080
+            - name: REACT_APP_EC_SERVER_ENDPOINT
+              value: roost-controlplane:30081
+          ports:
+            - containerPort: 80
 ---
 apiVersion: v1
 kind: Service
-metadata: 
-  labels: 
+metadata:
+  labels:
     apps: sample-test-suite
   name: sample-test-suite
-spec: 
+spec:
   type: NodePort
-  selector: 
+  selector:
     app: sample-test-suite
   ports:
-  - name: sample-test-suite
-    port: 80
-    targetPort: 5003
-    nodePort: 30088
+    - name: sample-test-suite
+      port: 80
+      targetPort: 5003
+      nodePort: 30088
 
 ---
 apiVersion: apps/v1
@@ -152,28 +152,28 @@ spec:
         app: sample-test-suite
     spec:
       containers:
-      - name: ballot
-        image: zbio/service-test-suite:latest
-        ports:
-        - containerPort: 5003
+        - name: ballot
+          image: zbio/service-test-suite:latest
+          ports:
+            - containerPort: 5003
 ---
 apiVersion: v1
 kind: Service
-metadata: 
-  labels: 
+metadata:
+  labels:
     apps: election-commission
     type: "roost-example"
   name: election-commission
-spec: 
+spec:
   type: NodePort
-  selector: 
+  selector:
     app: election-commission
     type: "roost-example"
   ports:
-  - name: election-commission
-    port: 80
-    targetPort: 80
-    nodePort: 30031
+    - name: election-commission
+      port: 80
+      targetPort: 80
+      nodePort: 30031
 
 ---
 apiVersion: apps/v1
@@ -193,13 +193,14 @@ spec:
         type: "roost-example"
     spec:
       containers:
-      - name: election-commission
-        image: zbio/election-commission:latest
-        stdin: true
-        tty: true
-        env:
-        - name: EC_SERVER_ENDPOINT
-          value: roost-controlplane:30081
-        ports:
-        - containerPort: 80
+        - name: election-commission
+          image: zbio/election-commission:latest
+          stdin: true
+          tty: true
+          env:
+            - name: EC_SERVER_ENDPOINT
+              value: roost-controlplane:30081
+          ports:
+            - containerPort: 80
 ---
+
