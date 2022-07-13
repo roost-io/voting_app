@@ -1,9 +1,8 @@
-const { expect } = require("chai")
 
 describe('Testing Election Commission Webpage', () => {
 
   it('Testing valid text in web-page',()=> {
-    cy.visit(Cypress.env('ROOST_SVC_URL'))
+    cy.visit('http://default.ecserver.10.10.0.10.nip.io/')
    
     cy.contains('Election Commission Admin Portal')
     cy.contains("Add Candidate")
@@ -15,7 +14,7 @@ describe('Testing Election Commission Webpage', () => {
   })
 
   it('Testing adding the candidate in web-page',()=>{
-    cy.visit(Cypress.env('ROOST_SVC_URL'))
+    cy.visit(Cypress.env('http://default.ecserver.10.10.0.10.nip.io/'))
 
     cy.intercept(
       {
@@ -48,7 +47,7 @@ describe('Testing Election Commission Webpage', () => {
 
   it('Testing deleting the candidate in web-page',()=>{
 
-    cy.visit(Cypress.env('ROOST_SVC_URL'))
+    cy.visit(Cypress.env('http://default.ecserver.10.10.0.10.nip.io/'))
     cy.intercept(
       {
         method: 'DELETE',
