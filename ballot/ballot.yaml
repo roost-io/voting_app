@@ -29,6 +29,6 @@ spec:
     spec:
       containers:
       - name: ballot
-        image: local-registry:5002/ballot:latest
+        image: vivekklp/ballot:latest
         ports:
         - containerPort: 8080

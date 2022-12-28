@@ -11,8 +11,8 @@ spec:
     type: "roost-example"
   ports:
   - name: election-commission
-    port: 80
-    targetPort: 80
+    port: 8082
+    targetPort: 8082
 
 ---
 apiVersion: apps/v1
@@ -33,11 +33,11 @@ spec:
     spec:
       containers:
       - name: election-commission
-        image: local-registry:5002/election-commission:latest
+        image: vivekklp/election-commission:latest
         stdin: true
         tty: true
         env:
         - name: EC_SERVER_ENDPOINT
-          value: ecserver.10.10.0.10.nip.io
+          value: EC_SERVER_ENDPOINT_VALUE
         ports:
-        - containerPort: 80
+        - containerPort: 8082

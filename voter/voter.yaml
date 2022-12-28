@@ -33,13 +33,13 @@ spec:
     spec:
       containers:
       - name: voter
-        image: local-registry:5002/voter:latest
+        image: vivekklp/voter:latest
         stdin: true
         tty: true
         env:
         - name: REACT_APP_BALLOT_ENDPOINT
-          value: ballot.10.10.0.10.nip.io
+          value: REACT_APP_BALLOT_ENDPOINT_VALUE
         - name: REACT_APP_EC_SERVER_ENDPOINT
-          value: ecserver.10.10.0.10.nip.io
+          value: REACT_APP_EC_SERVER_ENDPOINT_VALUE
         ports:
         - containerPort: 80
