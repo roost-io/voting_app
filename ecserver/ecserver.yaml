@@ -13,6 +13,7 @@ spec:
     port: 80
     targetPort: 8081
     # nodePort: 30081
+  type: LoadBalancer
 
 ---
 apiVersion: apps/v1
