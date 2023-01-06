@@ -13,6 +13,7 @@ spec:
   - name: election-commission
     port: 80
     targetPort: 8082
+  type: LoadBalancer
 
 ---
 apiVersion: apps/v1

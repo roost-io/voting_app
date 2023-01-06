@@ -11,6 +11,7 @@ spec:
   - name: ballot
     port: 80
     targetPort: 8080
+  type: LoadBalancer
 
 ---
 apiVersion: apps/v1
