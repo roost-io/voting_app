@@ -10,9 +10,9 @@ spec:
     app: election-commission
     type: "roost-example"
   ports:
-  - name: election-commission
-    port: 8082
+  - port: 8082
     targetPort: 8082
+  externalTrafficPolicy: Local
   type: LoadBalancer
 
 ---
