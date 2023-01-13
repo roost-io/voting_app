@@ -11,7 +11,7 @@ spec:
     type: "roost-example"
   ports:
   - name: election-commission
-    port: 80
+    port: 8082
     targetPort: 8082
   type: LoadBalancer
 
