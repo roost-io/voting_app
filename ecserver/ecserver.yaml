@@ -10,7 +10,7 @@ spec:
     app: ecserver
   ports:
   - name: ecserver
-    port: 8082
+    port: 8081
     targetPort: 8081
     # nodePort: 30081
   type: LoadBalancer
