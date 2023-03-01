@@ -1,0 +1,47 @@
+substitutions:
+    _TAG: testing #default value
+    _BALLOT_ENDPOINT: https://ballot-vn4vasaiuq-el.a.run.app
+    _ECSERVER_ENDPOINT: https://ecserver-vn4vasaiuq-el.a.run.app
+    _ELECTION_COMMISSION_ENDPOINT: https://election-commission-vn4vasaiuq-el.a.run.app
+    _VOTER_ENDPOINT: https://voter-vn4vasaiuq-el.a.run.app
+options:
+    substitution_option: 'ALLOW_LOOSE'
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  id: 'ballot'
+  args: ['build', '-t', 'gcr.io/${PROJECT_ID}/ballot-test', './ballot']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/${PROJECT_ID}/ballot-test']
+- name: 'gcr.io/cloud-builders/gcloud'
+  args: ['run','deploy','ballot','--image','gcr.io/${PROJECT_ID}/ballot-test','--region','asia-south1','--tag','${_TAG}','--min-instances','1','--allow-unauthenticated']
+  env:
+      - 'CLOUDSDK_COMPUTE_REGION=asia-south1'
+      - 'CLOUDSDK_COMPUTE_ZONE=asia-south1-a'
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/${PROJECT_ID}/ec-server-test', './ecserver']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/${PROJECT_ID}/ec-server-test']
+- name: 'gcr.io/cloud-builders/gcloud'
+  args: ['run','deploy','ecserver','--image','gcr.io/${PROJECT_ID}/ec-server-test','--region','asia-south1','--tag','${_TAG}','--min-instances','1','--allow-unauthenticated','--port','8081']
+  env:
+      - 'CLOUDSDK_COMPUTE_REGION=asia-south1'
+      - 'CLOUDSDK_COMPUTE_ZONE=asia-south1-a'
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/${PROJECT_ID}/election-commission-test', './election-commission']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/${PROJECT_ID}/election-commission-test']
+- name: 'gcr.io/cloud-builders/gcloud'
+  args: ['run','deploy','election-commission','--image','gcr.io/${PROJECT_ID}/election-commission-test','--region','asia-south1','--tag','${_TAG}','--min-instances','1','--set-env-vars','EC_SERVER_ENDPOINT=https://${_TAG}---ecserver-vn4vasaiuq-el.a.run.app ', '--port', '80','--allow-unauthenticated']
+  env:
+      - 'CLOUDSDK_COMPUTE_REGION=asia-south1'
+      - 'CLOUDSDK_COMPUTE_ZONE=asia-south1-a' 
+- name: 'gcr.io/cloud-builders/docker'
+  id: 'voter'
+  args: ['build', '-t', 'gcr.io/${PROJECT_ID}/voter-test', './voter']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/${PROJECT_ID}/voter-test']
+- name: 'gcr.io/cloud-builders/gcloud'
+  args: ['run','deploy','voter','--image','gcr.io/${PROJECT_ID}/voter-test','--region','asia-south1','--tag','${_TAG}','--min-instances','1','--set-env-vars','REACT_APP_EC_SERVER_ENDPOINT=https://${_TAG}---ecserver-vn4vasaiuq-el.a.run.app ' ,'--set-env-vars','REACT_APP_BALLOT_ENDPOINT=https://${_TAG}}---ballot-vn4vasaiuq-el.a.run.app ' ,'--port','80','--allow-unauthenticated']
+  env:
+      - 'CLOUDSDK_COMPUTE_REGION=asia-south1'
+      - 'CLOUDSDK_COMPUTE_ZONE=asia-south1-a'

@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+    name: voting-app
+    namespace: argocd
+spec:
+    project: default
+    source:
+        repoURL: https://github.com/roost-io/voting_app
+        targetRevision: HEAD
+        path: helm-vote
+        helm:
+            passCredentials: false # If true then adds --pass-credentials to Helm commands to pass credentials to all domains
+            parameters:
+                - name: 'registry'
+                  value: zbio
+                - name: 'tag'
+                  value: latest
+                - name: 'namespace'
+                  value: $ARGOCD_APP_NAMESPACE
+                - name: 'clusterIP'
+                  value: $ROOST_CLUSTER_IP
+    destination:
+        server: https://kubernetes.default.svc
+        namespace: to-be-replaced
+    syncPolicy:
+        syncOptions:
+            - CreateNamespace=true
+        automated:
+            prune: true
+            selfHeal: true

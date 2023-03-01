@@ -9,6 +9,10 @@ namespace: default
 clusterIP: 10.10.0.10
 clusterDomain: nip.io
 registry: &defaultRegistry local-registry:5002
+ballot_option: "{{option}}"
+ecserver_name: "{{name}}"
+ecserver_image_url: "{{image_url}}"
+
 
 services:
   voter: 

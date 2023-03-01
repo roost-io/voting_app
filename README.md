@@ -43,3 +43,17 @@ Roost intelligently identifies service dependencies. So whenever dependent servi
 In event of building ballot image or restart of the ballot app, service test suite would be triggered and fitness events can be seen from event viewer ( Observability -> Service Fitness -> Fitness Event).
 
 
+## How to deploy using cloudbuild.yaml
+
+Deploy the services manually and get the endpoints of the services(service url).  
+
+In the terminal run the command:
+
+```bash
+gcloud builds submit . --config=<path/to/cloudbuild.yaml> \ --substitution=_TAG=<provide the tag name>, _BALLOT_ENDPOINT=<ballot service url>, _ECSERVER_ENDPOINT=<ecserver service endpoint>
+```
+
+## How to generate deployment YAMLs
+
+
+Run the make generate command to generate the deployment YAMLs for all the services individually, if the users want to deploy a single microservice, these generated YAMLs will be located under generated-files/vote/templates/kubernetes-maifests.
