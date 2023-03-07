@@ -5,6 +5,8 @@ metadata:
     app: ecserver
   name: {{ .Values.services.ecserver.serviceName }}
   namespace: {{ .Values.namespace }}
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-internal: "true"
 spec: 
   selector: 
     app: ecserver

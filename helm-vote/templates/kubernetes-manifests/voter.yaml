@@ -6,6 +6,8 @@ metadata:
     type: "roost-example"
   name: {{ .Values.services.voter.serviceName }}
   namespace: {{ .Values.namespace }}
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-internal: "true"
 spec:
   selector: 
     app: voter
