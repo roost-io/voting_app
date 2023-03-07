@@ -12,6 +12,8 @@ registry: &defaultRegistry local-registry:5002
 ballot_option: "{{option}}"
 ecserver_name: "{{name}}"
 ecserver_image_url: "{{image_url}}"
+ballot_endpoint: ""
+ecserver_endpoint: ""
 
 
 services:

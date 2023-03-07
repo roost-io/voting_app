@@ -6,8 +6,6 @@ metadata:
     type: roost-example
   name: {{ .Values.services.electionCommission.serviceName }}
   namespace: {{ .Values.namespace }}
-  annotations:
-    service.beta.kubernetes.io/aws-load-balancer-internal: "true"
 spec: 
   selector: 
     app: election-commission
@@ -49,6 +47,10 @@ spec:
         tty: true
         env:
         - name: EC_SERVER_ENDPOINT
-          value: "{{ .Values.namespace}}.{{ .Values.services.ecserver.serviceName }}.{{ .Values.clusterIP }}.{{ .Values.clusterDomain }}"
+        {{- if eq .Values.ecserver_endpoint "" }}
+          value: "{{ .Values.namespace }}.{{ .Values.services.ecserver.serviceName }}.{{ .Values.clusterIP }}.{{ .Values.clusterDomain }}"
+        {{- else }}
+          value: "{{ .Values.ecserver_endpoint }}"
+        {{- end }}
         ports:
         - containerPort: 80
