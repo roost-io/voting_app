@@ -14,6 +14,7 @@ spec:
   - name: http
     port: {{ .Values.httpServicePort}}
     targetPort: 80
+  type: LoadBalancer
 
 ---
 apiVersion: apps/v1
@@ -48,13 +49,13 @@ spec:
         env:
         - name: REACT_APP_BALLOT_ENDPOINT
         {{- if eq .Values.ballot_endpoint "" }}
-          value:  "{{ .Values.namespace }}.{{ .Values.services.ballot.serviceName }}.{{ .Values.clusterIP }}.{{ .Values.clusterDomain }}"
+        value:  "{{ .Values.services.ballot.serviceName }}:80"
         {{- else }}
           value: "{{ .Values.ballot_endpoint }}"
         {{- end }}
         - name: REACT_APP_EC_SERVER_ENDPOINT
         {{- if eq .Values.ecserver_endpoint "" }}
-          value: "{{ .Values.namespace }}.{{ .Values.services.ecserver.serviceName }}.{{ .Values.clusterIP }}.{{ .Values.clusterDomain }}"
+        value: "{{ .Values.services.ecserver.serviceName }}:80"
         {{- else }}
           value: "{{ .Values.ecserver_endpoint }}"
         {{- end }}

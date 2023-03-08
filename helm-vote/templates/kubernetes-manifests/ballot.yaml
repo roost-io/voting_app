@@ -5,8 +5,6 @@ metadata:
     app: ballot
   name: {{ .Values.services.ballot.serviceName }}
   namespace: {{ .Values.namespace }}
-  annotations:
-    service.beta.kubernetes.io/aws-load-balancer-internal: "true"
 spec: 
   selector: 
     app: ballot
