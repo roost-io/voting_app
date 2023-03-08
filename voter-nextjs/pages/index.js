@@ -8,15 +8,6 @@ import React, { Component } from 'react';
 import kubernates from '../assets/kubernates.png';
 // import '../public/App.css';
 
-const ballot_endpoint =
-  // process.env.REACT_APP_BALLOT_ENDPOINT ||
-  // window.env.ballotEndpoint ||
-  'roost-controlplane:30080';
-const ec_server_endpoint =
-  // process.env.REACT_APP_EC_SERVER_ENDPOINT ||
-  // window.env.ecServerEndpoint ||
-  'roost-controlplane:30081';
-// const candidates = ['roost', 'docker', 'minikube', 'kind', 'k3d'];
 
 class Home extends Component {
   constructor(props) {
@@ -36,11 +27,13 @@ class Home extends Component {
   componentDidMount() {
     let r = Math.random().toString(36).substring(7);
     this.setState({ voter_id: r });
-    fetch(`http://${ec_server_endpoint}`, {
+    fetch(`/api/candidate`, {
       method: 'GET',
     })
       .then((response) => response.json())
       .then((response) => {
+        console.log(response)
+
         this.setState({ candidates: response.Candidates });
       })
       .catch((error) => {
@@ -59,16 +52,16 @@ class Home extends Component {
       // console.log('state: ', this.state);
       // console.log('data for POST: ', data);
       // console.log('ballot endpoint is: ', ballot_endpoint);
-      if (ballot_endpoint === '') {
-        console.error('ballot endpoint is not set');
-      } else {
-        fetch(`http://${ballot_endpoint}`, {
+    
+        fetch(`/api/count`, {
           method: 'POST',
           body: JSON.stringify(data),
         })
           .then((response) => response.json())
           .then((response) => {
-            this.setState({ showResultsButton: true });
+            if(response.success){
+              this.setState({ showResultsButton: true });
+            }
             // console.log(response);
           })
           .catch((error) => {
@@ -76,7 +69,7 @@ class Home extends Component {
               'ballot service is not reachable at http://' + ballot_endpoint
             );
           });
-      }
+      
     }
     if (prevState.showResultsButton !== this.state.showResultsButton) {
       this.setState({ showNotification: true });
