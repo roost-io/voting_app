@@ -12,6 +12,7 @@ spec:
   - name: http
     port: {{ .Values.httpServicePort }}
     targetPort: 8080
+  type: LoadBalancer
 
 ---
 apiVersion: apps/v1
