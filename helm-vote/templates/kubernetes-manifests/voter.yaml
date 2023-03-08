@@ -47,8 +47,16 @@ spec:
         tty: true
         env:
         - name: REACT_APP_BALLOT_ENDPOINT
-          value: "{{ .Values.namespace }}.{{ .Values.services.ballot.serviceName }}.{{ .Values.clusterIP }}.{{ .Values.clusterDomain }}"
+        {{- if eq .Values.ballot_endpoint "" }}
+          value:  "{{ .Values.namespace }}.{{ .Values.services.ballot.serviceName }}.{{ .Values.clusterIP }}.{{ .Values.clusterDomain }}" 
+        {{- else }}
+          value: "{{ .Values.ballot_endpoint }}"
+        {{- end }}
         - name: REACT_APP_EC_SERVER_ENDPOINT
+        {{- if eq .Values.ecserver_endpoint "" }}
           value: "{{ .Values.namespace }}.{{ .Values.services.ecserver.serviceName }}.{{ .Values.clusterIP }}.{{ .Values.clusterDomain }}"
+        {{- else }}
+          value: "{{ .Values.ecserver_endpoint }}"
+        {{- end }}
         ports:
         - containerPort: 80
