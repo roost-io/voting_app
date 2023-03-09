@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Link from 'next/link'
 import kubernates from '../public/assets/kubernates.png';
 
 class Home extends Component {
@@ -103,9 +104,9 @@ class Home extends Component {
 		// 		this.setState({ disabled: true });
 		//   }
 		// };
-		const showResults = () => {
-			this.props.history.push('/results');
-		};
+		// const showResults = () => {
+		// 	this.props.history.push('/results');
+		// };
 		const CustomCard = (candidate, index) => {
 			return (
 				<div
@@ -147,9 +148,9 @@ class Home extends Component {
 					})}
 				</div>
 				{this.state.showResultsButton && (
-					<div className="showResultsButton" onClick={() => showResults()}>
+					<Link className="showResultsButton" href='/results'>
 						Show Results
-					</div>
+					</Link>
 				)}
 				{this.state.showNotification && (
 					<div className="notificationPopup">
