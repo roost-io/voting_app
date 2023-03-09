@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 // import kind from './assets/kind.png';
 // import minikube from './assets/minikube.png';
 // import docker from './assets/docker.png';
-import kubernates from '../assets/kubernates.png';
+import kubernates from '../public/assets/kubernates.png';
 // import './App.css';
 
 const ballot_endpoint =
