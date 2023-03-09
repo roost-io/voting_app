@@ -44,13 +44,13 @@ spec:
         env:
         - name: BALLOT_ENDPOINT
         {{- if eq .Values.ballot_endpoint "" }}
-          value:  "http://{{ .Values.namespace }}.{{ .Values.services.ballot.serviceName }}.{{ .Values.clusterIP }}.{{ .Values.clusterDomain }}" 
+          value:  "http://{{ .Values.services.ballot.serviceName }}.{{ .Values.namespace }}.svc.cluster.local" 
         {{- else }}
           value: "{{ .Values.ballot_endpoint }}"
         {{- end }}
         - name: EC_SERVER_ENDPOINT
         {{- if eq .Values.ecserver_endpoint "" }}
-          value: "http://{{ .Values.namespace }}.{{ .Values.services.ecserver.serviceName }}.{{ .Values.clusterIP }}.{{ .Values.clusterDomain }}"
+          value: "http://{{ .Values.services.ecserver.serviceName }}.{{ .Values.namespace }}.svc.cluster.local"
         {{- else }}
           value: "{{ .Values.ecserver_endpoint }}"
         {{- end }}
