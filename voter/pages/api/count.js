@@ -2,7 +2,7 @@
 
 export default function handler(req, res) {
     console.log(req)
-    fetch(`http://${process.env.BALLOT_ENDPOINT}`, {
+    fetch(`${process.env.BALLOT_ENDPOINT}`, {
       method: 'POST',
       body: JSON.stringify(JSON.parse(req.body))
     })
