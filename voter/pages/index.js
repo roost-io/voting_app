@@ -31,7 +31,7 @@ class Home extends Component {
 			})
 			.catch((error) => {
 				console.error(
-					'ballot service is not reachable at http://' + ec_server_endpoint
+					'ballot service is not reachable'
 				);
 			});
 	}
@@ -42,7 +42,7 @@ class Home extends Component {
 			this.setState({ disabled: true });
 
 			const data = {
-				candidate_id: this.state.candidate_id,
+				candidate_id: candidate.Name,
 				vote: this.state.voter_id,
 			};
 
@@ -58,7 +58,7 @@ class Home extends Component {
 				})
 				.catch((error) => {
 					console.error(
-						'ballot service is not reachable at http://' + ballot_endpoint
+						'ballot service is not reachable '
 					);
 				});
 		}
