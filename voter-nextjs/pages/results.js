@@ -7,15 +7,6 @@ import React, { Component } from 'react';
 import kubernates from '../assets/kubernates.png';
 // import './App.css';
 
-const ballot_endpoint =
-	// process.env.REACT_APP_BALLOT_ENDPOINT ||
-	// window.env.ballotEndpoint ||
-	'roost-controlplane:30080';
-const ec_server_endpoint =
-	// process.env.REACT_APP_EC_SERVER_ENDPOINT ||
-	// window.env.ecServerEndpoint ||
-	'roost-controlplane:30081';
-let date = new Date();
 
 class Result extends Component {
 	constructor(props) {
@@ -28,7 +19,7 @@ class Result extends Component {
 	}
 
 	componentDidMount() {
-		fetch(`http://${ballot_endpoint}`, {
+		fetch(`/api/count`, {
 			method: 'GET',
 		})
 			.then((response) => {
@@ -48,7 +39,7 @@ class Result extends Component {
 				this.setState({ results: [] });
 				this.setState({ total_votes: 0 });
 			});
-		fetch(`http://${ec_server_endpoint}`, {
+		fetch(`/api/candidate`, {
 			method: 'GET',
 		})
 			.then((response) => response.json())
@@ -57,7 +48,7 @@ class Result extends Component {
 			})
 			.catch((error) => {
 				console.error(
-					'ballot service is not reachable at http://' + ec_server_endpoint
+					'ballot service is not reachable at http://' 
 				);
 			});
 	}

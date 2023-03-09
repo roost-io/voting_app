@@ -38,7 +38,7 @@ class Home extends Component {
       })
       .catch((error) => {
         console.error(
-          'ballot service is not reachable at http://' + ec_server_endpoint
+          'ballot service is not reachable at http://' 
         );
       });
   }
@@ -66,7 +66,7 @@ class Home extends Component {
           })
           .catch((error) => {
             console.error(
-              'ballot service is not reachable at http://' + ballot_endpoint
+              'ballot service is not reachable at http://' 
             );
           });
       

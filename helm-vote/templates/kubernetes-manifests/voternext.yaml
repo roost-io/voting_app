@@ -14,7 +14,7 @@ spec:
   ports:
   - name: http
     port: {{ .Values.httpServicePort}}
-    targetPort: 80
+    targetPort: 3000
   type: LoadBalancer
 
 ---
@@ -48,4 +48,4 @@ spec:
         - name: ballot_endpoint
           value: "{{ .Values.services.ballot.serviceName }}.{{ .Values.namespace }}.svc.cluster.local"
         ports:
-        - containerPort: 80
+        - containerPort: 3000
