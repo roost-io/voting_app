@@ -1,7 +1,7 @@
-console.log(process.env)
+
 
 export default function handler(req, res) {
-    fetch(`http://${process.env.ec_server_endpoint}`, {
+    fetch(`${process.env.EC_SERVER_ENDPOINT}`, {
       method: 'GET',
     })
       .then((response) => response.json())
@@ -10,7 +10,7 @@ export default function handler(req, res) {
       })
       .catch((error) => {
         console.error(
-          'ballot service is not reachable at http://' + process.env.ec_server_endpoint
+          'ballot service is not reachable at http://' + process.env.EC_SERVER_ENDPOINT
         );
         res.status(400).json({ Candidates: [] })
       });

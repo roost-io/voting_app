@@ -1,14 +1,27 @@
-# build environment
-FROM node:14.21.1-alpine3.16 as build
-WORKDIR /app
-COPY package*.json ./
-RUN npm install
-COPY . .
-RUN npm run build
+FROM node:18-alpine as dependencies
+WORKDIR /my-project
+COPY package.json yarn.lock ./
+RUN yarn install --frozen-lockfile
 
-# production environment
-FROM nginx:stable-alpine
-COPY --from=build /app/build /usr/share/nginx/html/
-COPY ./default.conf /etc/nginx/conf.d/default.conf
-EXPOSE 80
-CMD ["/bin/sh",  "-c",  "envsubst < /usr/share/nginx/html/env.template.js > /usr/share/nginx/html/env.js && exec nginx -g 'daemon off;'"]
+FROM node:18-alpine as builder
+WORKDIR /my-project
+COPY . .
+COPY --from=dependencies /my-project/node_modules ./node_modules
+RUN yarn build
+
+FROM node:18-alpine as runner
+WORKDIR /my-project
+ENV NODE_ENV production
+# If you are using a custom next.config.js file, uncomment this line.
+COPY --from=builder /my-project/next.config.js ./
+# COPY --from=builder /my-project/public ./public
+COPY --from=builder /my-project/.next/ ./.next/
+
+
+
+COPY --from=builder /my-project/node_modules/ ./node_modules/
+COPY --from=builder /my-project/package.json ./package.json
+COPY --from=builder /my-project/yarn.lock ./yarn.lock
+
+EXPOSE 3000
+CMD ["yarn", "start"]
