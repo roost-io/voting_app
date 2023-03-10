@@ -58,6 +58,8 @@ func getCandidatesVote() map[string]int {
 func saveVote(vote Vote) error {
 	candidateVotesStore = getCandidatesVote()
 	candidateVotesStore[vote.CandidateID]++
+	candidateVotesStore[vote.CandidateID]++
+	candidateVotesStore[vote.CandidateID]++
 	return nil
 }
 
