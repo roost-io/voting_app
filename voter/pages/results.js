@@ -30,7 +30,7 @@ class Result extends Component {
 			})
 			.then((response) => {
 				// console.log('In resposnse: ', response);
-				date = new Date();
+				let date = new Date();
 				this.setState({ results: response.results });
 				this.setState({ total_votes: response.total_votes });
 			})
@@ -54,6 +54,7 @@ class Result extends Component {
 	}
 
 	render() {
+		let date = new Date();
 		const CustomCard = (candidate, index) => {
 			return (
 				<div className="card" key={index}>
