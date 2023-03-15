@@ -14,11 +14,12 @@ ecserver_name: "{{name}}"
 ecserver_image_url: "{{image_url}}"
 ballot_endpoint: ""
 ecserver_endpoint: ""
+voterImageName: &defaultVoterImageName voter
 
 
 services:
   voter: 
-    imageName: voter # without registry-host and tag
+    imageName: *defaultVoterImageName # without registry-host and tag
     imageTag: *defaultTag
     serviceName: voter
     servicePort: *defaultServicePort

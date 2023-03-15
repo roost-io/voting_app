@@ -1,7 +1,10 @@
 body {
+	padding: 0;
+	margin: 0;
 	height: 100vh;
 	width: 100vw;
 	background-image: linear-gradient(to top right, transparent, #0d59a5);
+	font-family: Arial, Helvetica, sans-serif;
 }
 .card {
 	display: flex;
@@ -59,7 +62,7 @@ body {
 	justify-content: center;
 	align-items: center;
 	height: 100vh;
-	background-image: url('./assets/kubecon.jpg');
+	background-image: url('../public/assets/kubecon.jpg');
 	overflow: auto;
 }
 
