@@ -12,6 +12,7 @@ ifdef DOCKER_HOST
 	DOCKER_HOST_ARG= -H ${DOCKER_HOST}
 endif
 
+
 # HOSTNAME := $(shell hostname)
 .PHONY: all
 all: dockerise helm-deploy
