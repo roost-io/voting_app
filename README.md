@@ -20,7 +20,7 @@ An frontend to manage the election candidates and uses ecserver as backend to st
 
 Depends on: ecserver
 
-### ECserver
+### ECserverxx
 
 An backend app written in Golang for election-commission to store list of candidates.
 
