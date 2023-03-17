@@ -6,6 +6,8 @@ EC_IMG=election-commission
 ifndef IMAGE_TAG
   IMAGE_TAG=latest
 endif
+
+
 CLUSTER_IP := $(shell ping -W2 -n -q -c1 current-cluster-roost.io  2> /dev/null | awk -F '[()]' '/PING/ { print $$2}')
 DOCKER_HOST_ARG=
 ifdef DOCKER_HOST
