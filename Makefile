@@ -103,6 +103,7 @@ ifeq ($(strip $(CLUSTER_IP)),)
 endif
 		helm install vote helm-vote --set clusterIP=$(CLUSTER_IP)
 		
+		
 .PHONY: generate
 generate:
 	helm template helm-vote --output-dir generated-files
