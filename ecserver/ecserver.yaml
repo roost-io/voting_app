@@ -12,7 +12,7 @@ spec:
   - name: ecserver
     port: 80
     targetPort: 8081
-    nodePort: 30081
+    # nodePort: 30081
 
 ---
 apiVersion: apps/v1
@@ -31,6 +31,6 @@ spec:
     spec:
       containers:
       - name: ecserver
-        image: local-registry:5002/ecserver:latest
+        image: ecserver:v2
         ports:
         - containerPort: 8081

@@ -36,8 +36,12 @@ class Home extends Component {
   componentDidMount() {
     let r = Math.random().toString(36).substring(7);
     this.setState({ voter_id: r });
-    fetch(`http://${ec_server_endpoint}`, {
+    console.log('EC server endpoint:', ec_server_endpoint)
+    fetch(`${ec_server_endpoint}`, {
       method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
     })
       .then((response) => response.json())
       .then((response) => {
@@ -45,7 +49,7 @@ class Home extends Component {
       })
       .catch((error) => {
         console.error(
-          'ballot service is not reachable at http://' + ec_server_endpoint
+          'ballot service is not reachable at ' + ec_server_endpoint
         );
       });
   }
@@ -62,7 +66,7 @@ class Home extends Component {
       if (ballot_endpoint === '') {
         console.error('ballot endpoint is not set');
       } else {
-        fetch(`http://${ballot_endpoint}`, {
+        fetch(`${ballot_endpoint}`, {
           method: 'POST',
           body: JSON.stringify(data),
         })
@@ -73,7 +77,7 @@ class Home extends Component {
           })
           .catch((error) => {
             console.error(
-              'ballot service is not reachable at http://' + ballot_endpoint
+              'ballot service is not reachable at ' + ballot_endpoint
             );
           });
       }

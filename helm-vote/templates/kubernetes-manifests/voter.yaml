@@ -12,7 +12,7 @@ spec:
     type: roost-example
   ports:
   - name: http
-    port: {{ .Values.httpServicePort}}
+    port: {{ .Values.services.voter.servicePort | default .Values.httpServicePort }}
     targetPort: 80
 
 ---
@@ -42,7 +42,7 @@ spec:
     spec:
       containers:
       - name: voter
-        image: '{{- printf "%s/%s:%s" .Values.registry .Values.services.voter.imageName .Values.tag -}}'
+        image: '{{- printf "%s/%s:%s" .Values.registry .Values.services.voter.imageName ( .Values.services.voter.imageTag | default .Values.tag ) | trimPrefix "/" -}}'
         stdin: true
         tty: true
         env:

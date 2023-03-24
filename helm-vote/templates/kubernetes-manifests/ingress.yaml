@@ -7,7 +7,7 @@ metadata:
 spec:
   ingressClassName: nginx 
   rules:
-  - host: "{{ .Values.namespace }}.{{ .Values.services.voter.serviceName }}.{{ .Values.clusterIP }}.{{ .Values.clusterDomain }}"
+  - host: "{{ .Values.services.voter.serviceName }}.{{ .Values.namespace }}.{{ .Values.clusterIP }}.{{ .Values.clusterDomain }}"
     http:
       paths:
       - path: /
@@ -16,8 +16,8 @@ spec:
           service:
             name: {{ .Values.services.voter.serviceName }}
             port:
-              number: 80
-  - host: "{{ .Values.namespace }}.{{ .Values.services.ballot.serviceName }}.{{ .Values.clusterIP }}.{{ .Values.clusterDomain }}"
+              number: {{ .Values.services.voter.servicePort | default .Values.httpServicePort }}
+  - host: "{{ .Values.services.ballot.serviceName }}.{{ .Values.namespace }}.{{ .Values.clusterIP }}.{{ .Values.clusterDomain }}"
     http:
       paths:
       - path: /
@@ -26,8 +26,8 @@ spec:
           service:
             name: {{ .Values.services.ballot.serviceName }}
             port:
-              number: 80
-  - host: "{{ .Values.namespace }}.{{ .Values.services.ecserver.serviceName }}.{{ .Values.clusterIP }}.{{ .Values.clusterDomain }}"
+              number: {{ .Values.services.ballot.servicePort | default .Values.httpServicePort }}
+  - host: "{{ .Values.services.ecserver.serviceName }}.{{ .Values.namespace }}.{{ .Values.clusterIP }}.{{ .Values.clusterDomain }}"
     http:
       paths:
       - path: /
@@ -36,8 +36,8 @@ spec:
           service:
             name: {{ .Values.services.ecserver.serviceName }}
             port:
-              number: 80
-  - host: "{{ .Values.namespace }}.{{ .Values.services.electionCommission.serviceName }}.{{ .Values.clusterIP }}.{{ .Values.clusterDomain }}"
+              number: {{ .Values.services.ecserver.servicePort | default .Values.httpServicePort }}
+  - host: "{{ .Values.services.electionCommission.serviceName }}.{{ .Values.namespace }}.{{ .Values.clusterIP }}.{{ .Values.clusterDomain }}"
     http:
       paths:
       - path: /
@@ -46,4 +46,4 @@ spec:
           service:
             name: {{ .Values.services.electionCommission.serviceName }}
             port:
-              number: 80
+              number: {{ .Values.services.electionCommission.servicePort | default .Values.httpServicePort }}

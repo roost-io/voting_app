@@ -120,3 +120,17 @@ clean: helm-undeploy
 	-kubectl delete -f election-commission/ec.yaml
 	-kubectl delete -f generated-files
 	-rm -rf generated-files  
+
+.PHONY: load
+kind-build-load:
+	# docekr build -t ecserver:v1 ecserver
+	# docekr build -t ecserver:v1 ecserver
+	# docekr build -t ecserver:v1 ecserver
+	# docekr build -t ecserver:v1 ecserver
+
+	kind load docker-image voter:app
+	kind load docker-image ballot:app
+	kind load docker-image election-commission:app
+	kind load docker-image ecserver:app
+	kind load docker-image ecserver:v1
+	

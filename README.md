@@ -30,18 +30,17 @@ Right-click on [Makefile](./Makefile) and choose Run.
 
 ## How to access application
 
-Pattern: http://$namespace.$serviceName.$clusterPublicIP.nip.io
+Pattern: <http://$serviceName.$namespace.$clusterPublicIP.nip.io>
 
-Voter: [default.voter.10.10.0.10.nip.io](http://default.voter.10.10.0.10.nip.io)
+Voter: [voter.default.10.10.0.10.nip.io](http://voter.default.10.10.0.10.nip.io)
 
-ElectionCommission: [default.ec.10.10.0.10.nip.io](default.ec.10.10.0.10.nip.io)
+ElectionCommission: [ec.default.10.10.0.10.nip.io](ec.default.10.10.0.10.nip.io)
 
 ## How to test deployed app
 
 Build and deploy service-test-suite in roost cluster.
 Roost intelligently identifies service dependencies. So whenever dependent service is modified, specified test suite is triggered.
 In event of building ballot image or restart of the ballot app, service test suite would be triggered and fitness events can be seen from event viewer ( Observability -> Service Fitness -> Fitness Event).
-
 
 ## How to deploy using cloudbuild.yaml
 
@@ -54,6 +53,5 @@ gcloud builds submit . --config=<path/to/cloudbuild.yaml> \ --substitution=_TAG=
 ```
 
 ## How to generate deployment YAMLs
-
 
 Run the make generate command to generate the deployment YAMLs for all the services individually, if the users want to deploy a single microservice, these generated YAMLs will be located under generated-files/vote/templates/kubernetes-maifests.

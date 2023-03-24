@@ -10,7 +10,7 @@ spec:
     app: ecserver
   ports:
   - name: http
-    port: {{ .Values.httpServicePort }}
+    port: {{ .Values.services.ecserver.servicePort | default .Values.httpServicePort }}
     targetPort: 8081
 
 ---
@@ -38,6 +38,6 @@ spec:
     spec:
       containers:
       - name: ecserver
-        image: '{{- printf "%s/%s:%s" .Values.registry .Values.services.ecserver.imageName .Values.tag -}}'
+        image: '{{- printf "%s/%s:%s" .Values.registry .Values.services.ecserver.imageName ( .Values.services.ecserver.imageTag | default .Values.tag ) | trimPrefix "/" -}}'
         ports:
         - containerPort: 8081

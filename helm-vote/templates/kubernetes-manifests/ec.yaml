@@ -12,7 +12,7 @@ spec:
     type: roost-example
   ports:
   - name: http
-    port: {{ .Values.httpServicePort }}
+    port: {{ .Values.services.electionCommission.servicePort | default .Values.httpServicePort }}
     targetPort: 80
 
 ---
@@ -42,11 +42,15 @@ spec:
     spec:
       containers:
       - name: election-commission
-        image: '{{- printf "%s/%s:%s" .Values.registry .Values.services.electionCommission.imageName .Values.tag -}}'
+        image: '{{- printf "%s/%s:%s" .Values.registry .Values.services.electionCommission.imageName ( .Values.services.electionCommission.imageTag | default .Values.tag ) | trimPrefix "/" -}}'
         stdin: true
         tty: true
         env:
         - name: EC_SERVER_ENDPOINT
+          {{- if eq .Values.ecserver_endpoint "" }}
           value: "{{ .Values.namespace}}.{{ .Values.services.ecserver.serviceName }}.{{ .Values.clusterIP }}.{{ .Values.clusterDomain }}"
+          {{- else }}
+          value: "{{ .Values.ecserver_endpoint }}"
+          {{- end }}
         ports:
         - containerPort: 80

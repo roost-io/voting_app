@@ -3,7 +3,7 @@ var candidatesList = [];
 var cardsContainer = document.getElementById('cards-container');
 
 if (window['env']['ecServerEndpoint']) {
-  window.ecServerEndpoint = 'http://' + window['env']['ecServerEndpoint'];
+  window.ecServerEndpoint = window['env']['ecServerEndpoint'];
   form.addEventListener('submit', handleFormSubmit);
   getAllCandidates();
 } else {
@@ -14,18 +14,24 @@ if (window['env']['ecServerEndpoint']) {
 }
 
 function getAllCandidates() {
+  console.log("ecserver:", window.ecServerEndpoint)
   fetch(window.ecServerEndpoint, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
     },
   })
-    .then((res) => res.json())
     .then((res) => {
+      console.log("response:", res)
+      return res.json()
+    })
+    .then((res) => {
+      console.log("JSON parsed response:", res)
       candidatesList = res.Candidates;
       showAllCandidates(candidatesList);
     })
     .catch((err) => {
+      console.error("json parse reponse error", err)
       cardsContainer.innerHTML =
         '<div class="alert alert-danger" role="alert">' +
         'Error in adding the candidate. Please try again or report this to devs' +

@@ -10,7 +10,7 @@ spec:
     app: ballot
   ports:
   - name: http
-    port: {{ .Values.httpServicePort }}
+    port: {{ .Values.services.ballot.servicePort | default .Values.httpServicePort }}
     targetPort: 8080
 
 ---
@@ -39,6 +39,6 @@ spec:
     spec:
       containers:
       - name: ballot
-        image: '{{- printf "%s/%s:%s" .Values.registry .Values.services.ballot.imageName .Values.tag -}}'
+        image: '{{- printf "%s/%s:%s" .Values.registry .Values.services.ballot.imageName ( .Values.services.ballot.imageTag | default .Values.tag ) | trimPrefix "/" -}}'
         ports:
         - containerPort: 8080

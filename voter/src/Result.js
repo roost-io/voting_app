@@ -28,7 +28,7 @@ class Result extends Component {
 	}
 
 	componentDidMount() {
-		fetch(`http://${ballot_endpoint}`, {
+		fetch(`${ballot_endpoint}`, {
 			method: 'GET',
 		})
 			.then((response) => {
@@ -48,7 +48,7 @@ class Result extends Component {
 				this.setState({ results: [] });
 				this.setState({ total_votes: 0 });
 			});
-		fetch(`http://${ec_server_endpoint}`, {
+		fetch(`${ec_server_endpoint}`, {
 			method: 'GET',
 		})
 			.then((response) => response.json())
@@ -57,7 +57,7 @@ class Result extends Component {
 			})
 			.catch((error) => {
 				console.error(
-					'ballot service is not reachable at http://' + ec_server_endpoint
+					'ballot service is not reachable at ' + ec_server_endpoint
 				);
 			});
 	}

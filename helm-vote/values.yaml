@@ -3,8 +3,9 @@
 # Declare variables to be passed into your templates.
 
 
-httpServicePort: &defaultServicePort 80
-tag: &defaultTag latest
+httpServicePort: 80
+# tag: &defaultTag latest
+tag: "latest"
 namespace: default
 clusterIP: 10.10.0.10
 clusterDomain: nip.io
@@ -19,21 +20,21 @@ ecserver_endpoint: ""
 services:
   voter: 
     imageName: voter # without registry-host and tag
-    imageTag: *defaultTag
+    imageTag: ""
     serviceName: voter
-    servicePort: *defaultServicePort
+    servicePort: ""
   ballot: 
     imageName: ballot # without registry-host and tag
-    imageTag: *defaultTag
+    imageTag: ""
     serviceName: "ballot"
-    servicePort: *defaultServicePort
+    servicePort: ""
   electionCommission: 
     imageName: election-commission # without registry-host and tag
-    imageTag: *defaultTag
+    imageTag: ""
     serviceName: "ec"
-    servicePort: *defaultServicePort
+    servicePort: ""
   ecserver: 
     imageName: ecserver # without registry-host and tag
-    imageTag: *defaultTag
+    imageTag: ""
     serviceName: "ecserver"
-    servicePort: *defaultServicePort
+    servicePort: ""
