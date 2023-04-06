@@ -28,10 +28,10 @@ var (
 		 	Name:     "K3D",
 			ImageUrl: "https://www.suse.com/c/wp-content/uploads/2021/02/K3D-Blog-Graphic-20210209.png",
 		},
-		// {
-		// 	Name: "Rancher",
-		// 	ImageUrl: "https://rancher.com/assets/img/logos/rancher-logo-horiz-color.svg",
-		// },
+		{
+		 	Name: "Rancher",
+		 	ImageUrl: "https://rancher.com/assets/img/logos/rancher-logo-horiz-color.svg",
+		},
 	}
 )
 
