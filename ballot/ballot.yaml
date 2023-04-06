@@ -8,9 +8,10 @@ spec:
   selector: 
     app: ballot
   ports:
-  - name: ballot
-    port: 80
+  - port: 8080
     targetPort: 8080
+  externalTrafficPolicy: Local
+  type: LoadBalancer
 
 ---
 apiVersion: apps/v1
@@ -29,6 +30,6 @@ spec:
     spec:
       containers:
       - name: ballot
-        image: local-registry:5002/ballot:latest
+        image: vivekklp/ballot:latest
         ports:
         - containerPort: 8080
